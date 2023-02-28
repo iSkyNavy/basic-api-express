@@ -2,7 +2,7 @@ var express = require("express");
 const bodyParser = require("body-parser");
 
 var app = express();
-app.use(bodyParser.json()); // <-- this guy!
+app.use(bodyParser.json());
 
 var i = 0;
 app.get("/procesar", function (req, res) {
@@ -32,6 +32,14 @@ app.post("/custom-body/nuevo", function (req, res) {
 app.post("/on-error", function (req, res) {
   console.log(req.body, req.query);
   res.type("text/plain");
+  res.status(500);
+  res.send("error");
+});
+
+app.post("/new-data", function (req, res) {
+  console.log(req.body, req.query, req.params);
+  /* res.type("text/plain");
+  res.send("success"); */
   res.status(500);
   res.send("error");
 });
@@ -86,5 +94,4 @@ app.patch("/test-patch/:ss", function (req, res) {
   res.send("success custom body");
   // }
 });
-console.log(process.env.VAR, "----");
 app.listen(2205, () => console.log("Servidor on port 2205"));
